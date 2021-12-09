@@ -23,3 +23,15 @@ use Illuminate\Http\Request;
 Route::apiResource('/role', 'RoleController');
 Route::apiResource('/news', 'NewsController');
 Route::apiResource('/announcement', 'AnnounceController');
+
+Route::group([
+    'prefix' => 'auth' ,
+    'namespace' => 'Auth'
+], function(){
+    Route::post('register', 'RegisterController')->name('auth.register');
+    Route::post('regenerate-otp-code', 'RegenerateOtpCodeController')->name('auth.regenerate_otp_code');
+    Route::post('verification', 'VerificationController')->name('auth.verification');
+    Route::post('update-password', 'UpdatePasswordController')->name('auth.update_password');
+    Route::post('login', 'LoginController')->name('auth.login');
+
+});

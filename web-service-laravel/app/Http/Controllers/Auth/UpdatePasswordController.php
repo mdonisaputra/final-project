@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class LoginController extends Controller
+class UpdatePasswordController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -16,13 +18,12 @@ class LoginController extends Controller
      */
     public function __invoke(Request $request)
     {
-        
         $allRequest = $request->all();
 
 
         $validator = Validator::make($allRequest, [
             'email'   => 'required',
-            'password' => 'required'
+            'password' => 'required|confirmed|min:6',
         ]);
         
         //response error validation
@@ -30,25 +31,26 @@ class LoginController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $credentials = request(['email', 'password']);
+        $user = User::where('email' , $request->email)->first();
 
-        if (! $token = auth()->attempt($credentials))
-        {
+        if (!$user) {
+
             return response()->json([
                 'success' => false,
-                'message' => 'Email dan password tidak ditemukan'
-            ], 401);
+                'message' => 'Email tidak ditemukan'
+
+            ], 400);
         }
 
-            return response()->json([
-                'success' => true,
-                'message' => 'User berhasil login',
-                'data' => [
-                    'user' => auth()->user(),
-                    'token' => $token
-                ]
-            ], 200);
+        $user->update ([
+            'password' => Hash::make($request->password)
+        ]);
 
+        return response()->json([
+            'success' => true,
+            'message' => 'Password berhasil diubah',
+            'data' => $user
+
+        ]);
     }
-    
 }
