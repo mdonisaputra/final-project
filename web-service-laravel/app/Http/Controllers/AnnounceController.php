@@ -38,6 +38,7 @@ class AnnounceController extends Controller
         //find post by ID
         $announcement = Announcement::findOrfail($id);
 
+
         //make response JSON
         return response()->json([
             'success' => true,
@@ -103,7 +104,7 @@ class AnnounceController extends Controller
      * @param  mixed $announcement
      * @return void
      */
-    public function update(Request $request, Announcement $announcement)
+    public function update(Request $request, $id ) //Announcement $announcement)
     {
         //set validation
         $validator = Validator::make($request->all(), [
@@ -120,8 +121,10 @@ class AnnounceController extends Controller
         //find post by ID
         //$post = Post::findOrFail($post->id);
         $announcement = Announcement::find($id);
+        
 
-        if($announcement) {
+        if($announcement)
+        {
             $user = auth()->user();
 
             if($announcement->user_id != $user->id){
