@@ -168,7 +168,7 @@ class NewsController extends Controller
     public function destroy($id)
     {
         //find post by ID
-        $new = News::findOrfail($id);
+        $new = News::find($id);  //findOrfail($id);
 
         if($new) {
 

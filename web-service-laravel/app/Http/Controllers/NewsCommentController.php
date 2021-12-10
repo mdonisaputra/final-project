@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\NewsComment;
+use App\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class NewsCommentController extends Controller
-{    
+{   
+    public function __construct()
+    {
+        return $this->middleware('auth:api')->except(['index' , 'show']);
+    } 
     /**
      * index
      *
@@ -58,7 +63,7 @@ class NewsCommentController extends Controller
         //set validation
         $validator = Validator::make($request->all(), [
             'isi'   => 'required',
-            'new_id' => 'required|news,id',
+            'new_id' => 'required',
         ]);
         
         //response error validation
@@ -98,12 +103,12 @@ class NewsCommentController extends Controller
      * @param  mixed $newscomment
      * @return void
      */
-    public function update(Request $request, NewsComment $newscomment)
+    public function update(Request $request, $id)//, NewsComment $newscomment)
     {
         //set validation
         $validator = Validator::make($request->all(), [
             'isi'   => 'required',
-            'new_id' => 'required|news,id',
+            //'new_id' => 'required',
         ]);
         
         //response error validation
@@ -112,7 +117,7 @@ class NewsCommentController extends Controller
         }
 
         //find post by ID
-        $newscomment = NewsComment::findOrFail($newscomment->id);
+        $newscomment = NewsComment::find($id); //OrFail($newscomment->id);
 
         if($newscomment) {
 
@@ -128,7 +133,7 @@ class NewsCommentController extends Controller
             //update post
             $newscomment->update([
                 'isi'     => $request->isi,
-                'new_id' => $request->new_id
+                //'new_id' => $request->new_id
             ]);
 
             return response()->json([

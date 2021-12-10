@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\News;
+use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,7 +31,7 @@ class NewsComment extends Model
                 $model->{$model->getKeyName()} = Str::uuid();
             }
 
-            // $model->user_id = auth()->user()->id;
+            $model->user_id = auth()->user()->id;
         });
     }
 }

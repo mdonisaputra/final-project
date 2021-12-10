@@ -23,6 +23,8 @@ use Illuminate\Http\Request;
 Route::apiResource('/role', 'RoleController');
 Route::apiResource('/news', 'NewsController');
 Route::apiResource('/announcement', 'AnnounceController');
+Route::apiResource('/newscomment', 'NewsCommentController');
+Route::apiResource('/announcecomment', 'AnnounceCommentController');
 
 Route::group([
     'prefix' => 'auth' ,
@@ -35,6 +37,3 @@ Route::group([
     Route::post('login', 'LoginController')->name('auth.login');
 
 });
-
-Route::apiResource('/newscomment', 'NewsCommentController');
-Route::apiResource('/announcecomment', 'AnnounceCommentController');
