@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\News;
+use App\AnnounceComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class NewsController extends Controller
+class AnnounceCommentController extends Controller
 {    
-     public function __construct()
-    {
-        return $this->middleware('auth:api')->only(['store' , 'update' , 'delete']);
-    } 
- 
     /**
      * index
      *
@@ -21,13 +16,13 @@ class NewsController extends Controller
     public function index()
     {
         //get data from table posts
-        $news = News::latest()->get();
+        $announcecomments = AnnounceComment::latest()->get();
 
         //make response JSON
         return response()->json([
             'success' => true,
-            'message' => 'List Data News',
-            'data'    => $news  
+            'message' => 'List Data Comment on Announcement',
+            'data'    => $announcecomments  
         ], 200);
 
     }
@@ -41,13 +36,13 @@ class NewsController extends Controller
     public function show($id)
     {
         //find post by ID
-        $new = News::findOrfail($id);
+        $announcecomment = AnnounceComment::findOrfail($id);
 
         //make response JSON
         return response()->json([
             'success' => true,
-            'message' => 'Detail Data News',
-            'data'    => $new 
+            'message' => 'Detail Data Comment on Announcement',
+            'data'    => $announcecomment 
         ], 200);
 
     }
@@ -60,12 +55,10 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $allRequest = $request->all();
         //set validation
-        $validator = Validator::make($allRequest, [  //$request->all(), [
-            'judul'   => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'required',
+        $validator = Validator::make($request->all(), [
+            'isi'   => 'required',
+            'announcement_id' => 'required|announcements,id',
         ]);
         
         //response error validation
@@ -73,23 +66,19 @@ class NewsController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $user = auth()->user();
-
         //save to database
-        $new = News::create([
-            'judul'     => $request->judul,
-            'user_id' =>$user->id,
-            'deskripsi'   => $request->deskripsi,
-            'gambar' => $request->gambar
+        $announcecomment = AnnounceComment::create([
+            'isi'     => $request->isi,
+            'announcement_id' => $request->announcement_id
         ]);
 
         //success save to database
-        if($new) {
+        if($announcecomment) {
 
             return response()->json([
                 'success' => true,
-                'message' => 'News Created',
-                'data'    => $new  
+                'message' => 'Comment Created',
+                'data'    => $announcecomment  
             ], 201);
 
         } 
@@ -97,7 +86,7 @@ class NewsController extends Controller
         //failed save to database
         return response()->json([
             'success' => false,
-            'message' => 'News Failed to Save',
+            'message' => 'Comment Failed to Save',
         ], 409);
 
     }
@@ -106,18 +95,15 @@ class NewsController extends Controller
      * update
      *
      * @param  mixed $request
-     * @param  mixed $new
+     * @param  mixed $announcecomment
      * @return void
      */
-    public function update(Request $request, $id) //, News $new)
+    public function update(Request $request, AnnounceComment $announcecomment)
     {
-        $allRequest = $request->all();
-
         //set validation
-        $validator = Validator::make($allRequest, [  //$request->all(), [
-            'judul'   => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'required',
+        $validator = Validator::make($request->all(), [
+            'isi'   => 'required',
+            'announcement_id' => 'required|announcements,id',
         ]);
         
         //response error validation
@@ -126,36 +112,37 @@ class NewsController extends Controller
         }
 
         //find post by ID
-        //$post = Post::findOrFail($post->id);
-        $new = News::find($id);
+        $announcecomment = AnnounceComment::findOrFail($announcecomment->id);
 
-        if($new) {
+        if($announcecomment) {
+
             $user = auth()->user();
 
-            if($new->user_id != $user->id){
+            if($announcecomment->user_id != $user->id){
                 return response()->json([
                     'success' => false,
-                    'message' => 'News cannot be updated'
+                    'message' => 'Comment cannot be updated'
                 ], 403);
             }
-            
-            $new->update([
-                'judul'     => $request->judul,
-                'deskripsi'   => $request->deskripsi,
-                'gambar' => $request->gambar
+
+            //update post
+            $announcecomment->update([
+                'isi'     => $request->isi,
+                'announcement_id' => $request->announcement_id
             ]);
-            
+
             return response()->json([
                 'success' => true,
-                'message' => 'News updated',
-                'data' => $new
-            ]);
+                'message' => 'Comment updated',
+                'data'    => $announcecomment  
+            ], 200);
+
         }
 
-        //post tidak ditemukan
+        //data post not found
         return response()->json([
             'success' => false,
-            'message' => 'News not found'
+            'message' => 'Comment not found',
         ], 404);
 
     }
@@ -169,25 +156,25 @@ class NewsController extends Controller
     public function destroy($id)
     {
         //find post by ID
-        $new = News::findOrfail($id);
+        $announcecomment = AnnounceComment::findOrfail($id);
 
-        if($new) {
+        if($announcecomment) {
 
             $user = auth()->user();
 
-            if($new->user_id != $user->id){
+            if($announcecomment->user_id != $user->id){
                 return response()->json([
                     'success' => false,
-                    'message' => 'News cannot be deleted'
+                    'message' => 'Comment cannot be deleted'
                 ], 403);
             }
 
             //delete post
-            $new->delete();
+            $announcecomment->delete();
 
             return response()->json([
                 'success' => true,
-                'message' => 'News deleted',
+                'message' => 'Comment deleted',
             ], 200);
 
         }
@@ -195,7 +182,7 @@ class NewsController extends Controller
         //data post not found
         return response()->json([
             'success' => false,
-            'message' => 'News not found',
+            'message' => 'Comment not found',
         ], 404);
     }
 }

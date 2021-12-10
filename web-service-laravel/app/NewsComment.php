@@ -29,7 +29,7 @@ class NewsComment extends Model
                 $model->{$model->getKeyName()} = Str::uuid();
             }
 
-            $model->user_id = auth()->user()->id;
+            // $model->user_id = auth()->user()->id;
         });
     }
 }

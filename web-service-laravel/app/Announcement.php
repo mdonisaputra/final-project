@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\User;
+use App\AnnounceComment;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,7 +31,7 @@ class Announcement extends Model
                 $model->{$model->getKeyName()} = Str::uuid();
             }
 
-            // $model->user_id = auth()->user()->id;
+            $model->user_id = auth()->user()->id;
         });
     }
 }

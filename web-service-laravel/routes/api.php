@@ -35,3 +35,6 @@ Route::group([
     Route::post('login', 'LoginController')->name('auth.login');
 
 });
+
+Route::apiResource('/newscomment', 'NewsCommentController');
+Route::apiResource('/announcecomment', 'AnnounceCommentController');

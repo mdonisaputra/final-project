@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Validator;
 
 class AnnounceController extends Controller
 {    
+    public function __construct()
+    {
+        return $this->middleware('auth:api')->only(['store' , 'update' , 'delete']);
+    } 
+
     /**
      * index
      *
@@ -68,12 +73,12 @@ class AnnounceController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        //$user = auth()->user();
+        $user = auth()->user();
 
         //save to database
         $announcement = Announcement::create([
             'judul'     => $request->judul,
-            //'user_id' =>$user->id
+            'user_id' =>$user->id,
             'deskripsi'   => $request->deskripsi,
             'file' => $request->file
         ]);

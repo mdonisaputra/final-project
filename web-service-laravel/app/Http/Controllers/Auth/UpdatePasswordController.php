@@ -23,7 +23,8 @@ class UpdatePasswordController extends Controller
 
         $validator = Validator::make($allRequest, [
             'email'   => 'required',
-            'password' => 'required|confirmed|min:6',
+            'password' => 'required|min:6',
+            // 'password' => 'required|confirmed|min:6'
         ]);
         
         //response error validation
