@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
 {    
+    public function __construct()
+    {
+        return $this->middleware('auth:api')->only(['store' , 'update' , 'delete']);
+    }
     /**
      * index
      *
@@ -54,9 +58,10 @@ class NewsController extends Controller
      * @return void
      */
     public function store(Request $request)
-    {
+    {   
+        $allRequest = $request->all();
         //set validation
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($allRequest, [  //$request->all(), [
             'judul'   => 'required',
             'deskripsi' => 'required',
             'gambar' => 'required',
@@ -103,10 +108,12 @@ class NewsController extends Controller
      * @param  mixed $new
      * @return void
      */
-    public function update(Request $request, News $new)
+    public function update(Request $request, $id) //, News $new)
     {
+        $allRequest = $request->all();
+
         //set validation
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($allRequest, [  //$request->all(), [
             'judul'   => 'required',
             'deskripsi' => 'required',
             'gambar' => 'required',

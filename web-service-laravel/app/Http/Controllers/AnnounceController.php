@@ -7,7 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class AnnounceController extends Controller
-{    
+{   
+    public function __construct()
+    {
+        return $this->middleware('auth:api')->only(['store' , 'update' , 'delete']);
+    } 
+    
     /**
      * index
      *
