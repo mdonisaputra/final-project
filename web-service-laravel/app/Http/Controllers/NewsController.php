@@ -8,11 +8,10 @@ use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
 {    
-     public function __construct()
+    public function __construct()
     {
         return $this->middleware('auth:api')->only(['store' , 'update' , 'delete']);
-    } 
- 
+    }
     /**
      * index
      *
@@ -59,7 +58,7 @@ class NewsController extends Controller
      * @return void
      */
     public function store(Request $request)
-    {
+    {   
         $allRequest = $request->all();
         //set validation
         $validator = Validator::make($allRequest, [  //$request->all(), [
