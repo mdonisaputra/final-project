@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\AnnounceComment;
+use App\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class AnnounceCommentController extends Controller
 {    
+    public function __construct()
+    {
+        return $this->middleware('auth:api')->except(['index' , 'show']);
+    } 
     /**
      * index
      *
@@ -58,7 +63,7 @@ class AnnounceCommentController extends Controller
         //set validation
         $validator = Validator::make($request->all(), [
             'isi'   => 'required',
-            'announcement_id' => 'required|announcements,id',
+            'announcement_id' => 'required',
         ]);
         
         //response error validation
@@ -103,7 +108,7 @@ class AnnounceCommentController extends Controller
         //set validation
         $validator = Validator::make($request->all(), [
             'isi'   => 'required',
-            'announcement_id' => 'required|announcements,id',
+            'announcement_id' => 'required',//penyebab error (|announcements,id',)
         ]);
         
         //response error validation
