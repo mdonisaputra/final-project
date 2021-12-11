@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "dev": "yarn serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --skip-plugins @vue/cli-plugin-eslint",
     "lint": "vue-cli-service lint",
     "postversion": "node scripts/postversion.js"
   },
@@ -21,7 +21,6 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@vue/cli-plugin-babel": "^4.3.1",
-    "@vue/cli-plugin-eslint": "^4.3.1",
     "@vue/cli-plugin-router": "~4.3.1",
     "@vue/cli-plugin-vuex": "~4.4.0",
     "@vue/cli-service": "^4.3.1",
