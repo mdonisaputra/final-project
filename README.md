@@ -1,6 +1,25 @@
-# Final Project
+## Final Project Laravel
+
+## Kelompok 13
+
+## Anggota Kelompok
+- Ahsani Aisyah
+- Mihdan Advani
+- M. Doni Saputra
+
+## Tema Project
+
+Website Pemerintah
+
+## ERD
+
+<p align="center"><img src="https://i.ibb.co/dkFD17f/sosial-media-erd-fixed.png"></p>
 
 
+## Link Demo
+
+- Link Demo Video : 
+- Link Deploy : 
 
 ## Getting started
 
