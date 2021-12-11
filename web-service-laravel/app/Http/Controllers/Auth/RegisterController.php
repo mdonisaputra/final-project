@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\OtpCodeStoredEvent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\OtpCode;
@@ -45,6 +46,10 @@ class RegisterController extends Controller
             'valid_until' => $now->addMinutes(10),
             'user_id' => $user->id
         ]);
+
+
+        //kirim email otp code ke email register
+        event(new OtpCodeStoredEvent($otp_code , true));
 
         return response()->json([
             'success' => true,

@@ -6,6 +6,7 @@ use App\User;
 use App\OtpCode;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Events\OtpCodeStoredEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -55,6 +56,9 @@ class RegenerateOtpCodeController extends Controller
             'user_id' => $user->id
 
         ]);
+
+        //kirim email otp code ke email register
+        event(new OtpCodeStoredEvent($otp_code)); //, false));
 
         return response()->json([
             'success' => true,
