@@ -4,32 +4,37 @@
             <v-btn icon dark @click.native="close">
                 <v-icon>mdi-close</v-icon>
             </v-btn>
-            <v-toolbar-title>Login</v-toolbar-title>
+            <v-toolbar-title>Register</v-toolbar-title>
         </v-toolbar>
     <v-divider></v-divider>
     <v-container fluid>
         <v-form ref="form">
+            <v-text-field
+            v-model="nama"
+            label="Nama"
+            required
+            append-icon="mdi-user"
+            ></v-text-field>
+            <v-text-field
+            v-model="username"
+            label="Username"
+            required
+            append-icon="mdi-name"
+            ></v-text-field>
             <v-text-field
             v-model="email"
             label="E-mail"
             required
             append-icon="mdi-email"
             ></v-text-field>
-            <v-text-field
-            v-model="password"
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="showPassword ? 'text' : 'password'"
-            label="Password"
-            counter
-            @click:append="showPassword = !showPassword"
-            ></v-text-field>
+
+
 
             <div class="text-xs-center">
                 <v-btn
                 color="primary lighten-1"
                 @click="submit"
-                >Login
-                <v-icon right dark>mdi-lock-open</v-icon>
+                >Register
                 </v-btn>
             </div>
         </v-form>
@@ -55,7 +60,7 @@ export default {
         },
 
         submit() {
-            alert('masuk metod submit')
+            alert('masuk metod register')
         }
 
     },
