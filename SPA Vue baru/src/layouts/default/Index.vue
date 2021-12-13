@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <alert/>
-    <Dialog/>
+
     <!-- Bar Atas -->
     <v-app-bar
     id="default-app-bar"
@@ -133,7 +133,7 @@
           <v-icon left>mdi-lock</v-icon>
           login
         </v-btn>
-        <v-btn block color="success" @click="register">
+        <v-btn block color="success">
           <v-icon left>mdi-account</v-icon>
           Register
         </v-btn>
@@ -166,7 +166,6 @@
     <div class="pt-12" />
   </v-navigation-drawer>
 
-
     <default-view />
 
     <default-footer />
@@ -175,11 +174,9 @@
   </v-app>
 </template>
 
-
-
 <script>
   import { get, sync } from 'vuex-pathify'
-  import { mapActions, mapGetters } from 'vuex'
+  import { mapActions } from 'vuex'
 
   export default {
     name: 'DefaultLayout',
@@ -191,18 +188,10 @@
       DefaultView: () => import('./View'),
       Alert  : () => import('./Alert.vue'),
       DefaultDrawerToggle: () => import('./widgets/DrawerToggle'),
-      Dialog : () => import('./Dialog.vue')
 
     },
-
     data: () => ({
-      // drawer: true,
-      menus: [
-        {title: 'Home', icon: 'mdi-home', route: '/'},
-        {title: 'Berita', icon: 'mdi-note', route: '/berita'},
-        {title: 'Pengumuman', icon: 'mdi-clipboard-outline', route: '/pengumuman'}
-      ],
-      apiDomain: "http://project-webservice.herokuapp.com",
+      guest : true,
     }),
 
     methods : {
@@ -216,30 +205,21 @@
     },
     login(){
       this.setDialogComponent({'component' : 'login'})
-      // this.guest = false 
-      // this.setAlert({
-      //   status : true,
-      //   color : 'success',
-      //   text : 'Anda berhasil login'
-      // })
-    },
-      register(){
-      this.setDialogComponent({'component' : 'register'})
+      this.guest = false 
+      this.setAlert({
+        status : true,
+        color : 'success',
+        text : 'Anda berhasil login'
+      })
     },
       ...mapActions({
       setAlert                      : 'alert/set',
-      setDialogComponent            : 'dialog/setComponent'
-
+      setDialogComponent            : 'dialog/setComponent',
     }),
   },
     
 
     computed: {
-      ...mapGetters({
-        guest: 'auth/guest',
-        user: 'auth/user',
-      }),
-
       ...get('user', [
         'dark',
         'gradient',
