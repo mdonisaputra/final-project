@@ -129,11 +129,11 @@
         block
         color="primary" class="mb-1" @click="login">
           <v-icon left>mdi-lock</v-icon>
-          Login
+          LOGIN
         </v-btn>
         <v-btn block color="success" @click="register">
           <v-icon left>mdi-account</v-icon>
-          Register
+          REGISTER
         </v-btn>
       </div>
     </v-list>
@@ -153,19 +153,15 @@
           @click="logout"
         >
           <v-icon left>mdi-lock</v-icon>
-          Log Out
+          LOGOUT
         </app-btn>
       </div>
     </template>
 
     <div class="pt-12" />
   </v-navigation-drawer>
-
-
     <default-view />
-
     <default-footer />
-
     <default-settings />
   </v-app>
 </template>
@@ -197,28 +193,44 @@
         {title: 'Berita', icon: 'mdi-note', route: '/berita'},
         {title: 'Pengumuman', icon: 'mdi-clipboard-outline', route: '/pengumuman'}
       ],
-      apiDomain: "http://project-webservice.herokuapp.com",
+      apiDomain: "http://localhost:8081/"
+      // apiDomain: "http://project-webservice.herokuapp.com",
     }),
 
     methods : {
     logout(){
-      this.guest = true 
-      this.setAlert({
-        status : true,
-        color : 'success',
-        text : 'Anda berhasil logout'
-      })
+      let config = {
+          method: 'post',
+          // url: this.apiDomain + "/api/v2/auth/logout",
+          url: this.apiDomain + "logout",
+          headers: {
+            'Authorization' : 'Bearer' + this.token,
+          },
+        }
+      this.axios(config)
+        .then(() => {
+            this.setToken('')
+            this.setUser({})
+            this.setAlert({
+              status : true,
+              color : 'success',
+              text : 'Anda berhasil logout'
+            }) 
+          })
+        .catch((response) => {
+            this.setAlert({
+              status: true,
+              color: 'error',
+              text: responses.data.error,
+            })
+          })
     },
+
     login(){
       this.setDialogComponent({'component' : 'login'})
-      // this.guest = false 
-      // this.setAlert({
-      //   status : true,
-      //   color : 'success',
-      //   text : 'Anda berhasil login'
-      // })
     },
-      register(){
+
+    register(){
       this.setDialogComponent({'component' : 'register'})
     },
       ...mapActions({
@@ -226,13 +238,14 @@
       setDialogComponent            : 'dialog/setComponent'
 
     }),
-  },
+    },
     
-
+    
     computed: {
       ...mapGetters({
         guest: 'auth/guest',
         user: 'auth/user',
+        token: 'auth/token'
       }),
 
       ...get('user', [
@@ -250,6 +263,12 @@
         'mini',
       ]),
       name: get('route/name'),
+    },
+
+    mounted(){
+      if(this.token){
+        this.checkToken(this.token)
+      }
     },
   }
 </script>

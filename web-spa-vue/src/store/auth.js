@@ -27,6 +27,9 @@ export default{
                     'Authorization': 'Bearer' + payload,
                 },
             }
+        // setUser: ({commit}, payload) => {
+        //     commit('setUser', payload)
+        // },
         
         axios(config)
             .then((response) => {
