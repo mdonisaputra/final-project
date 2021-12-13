@@ -204,6 +204,7 @@
       })
     },
     login(){
+      this.setDialogComponent({'component' : 'login'})
       this.guest = false 
       this.setAlert({
         status : true,
@@ -213,6 +214,7 @@
     },
       ...mapActions({
       setAlert                      : 'alert/set',
+      setDialogComponent            : 'dialog/setComponent',
     }),
   },
     

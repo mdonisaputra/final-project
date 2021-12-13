@@ -80,7 +80,7 @@ class User extends Authenticatable implements JWTSubject
                 $model->{$model->getKeyName()} = Str::uuid();
             }
 
-            $model->role_id = Role::where('role', 'admin')->first()->id;
+            // $model->role_id = Role::where('role', 'admin')->first()->id;
         });
     }
 

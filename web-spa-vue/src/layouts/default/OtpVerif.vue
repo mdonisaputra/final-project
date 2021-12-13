@@ -60,7 +60,7 @@ export default {
         },
 
         submit() {
-            alert('masuk metod register')
+            alert('OTP Terverifikasi')
         }
 
     },

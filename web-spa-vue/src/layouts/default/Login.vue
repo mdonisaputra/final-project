@@ -55,7 +55,7 @@ export default {
         },
 
         submit() {
-            alert('masuk metod submit')
+            alert('Berhasil Login')
         }
 
     },
