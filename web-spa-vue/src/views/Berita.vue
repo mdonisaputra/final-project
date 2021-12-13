@@ -1,37 +1,16 @@
 <template>
-  <v-container class="ma-0 pa-0" grid-list-sm>
+  <v-container fluid tag="section" class="ma-0 pa-0" grid-list-sm>
     <view-intro
       heading="Berita"
       link="Berisi Kumpulan Berita Terbaru Dari Desa Sukamaju"
     />
 
     <v-layout wrap>
-      <v-flex v-for="berita in beritas" :key="`berita-` + berita.id" xs6>
-        <v-card :to="'/news/' + berita.id">
-          <v-img
-            :src="
-              berita.gambar
-                ? apiDomain + berita.gambar
-                : 'https://picsum.photos/200/300'
-            "
-            class="white--text"
-            height="200px"
-          >
-            <v-card-title
-              class="fill-height align-end"
-              v-text="berita.title"
-            ></v-card-title>
-          </v-img>
-
-          <v-card-actions>
-            <v-progress-linear color="primary" height="7"> </v-progress-linear>
-          </v-card-actions>
-
-          <v-card-actions>
-            <span>{{ berita.title.substring(0, 15) }}...</span>
-          </v-card-actions>
-        </v-card>
-      </v-flex>
+      <berita-component
+        v-for="blog in blogs"
+        :key="`blog-` + blog.id"
+        :blog="blog"
+      ></berita-component>
     </v-layout>
 
     <v-pagination
@@ -47,36 +26,48 @@
 </template>
 
 <script>
+import BeritaComponent from "../layouts/default/BeritaComponent.vue";
+
 export default {
   name: "Berita",
 
   data: () => ({
-    apiDomains: "http://project-webservice.herokuapp.com",
-    beritas: [],
+    // apiDomains: "http://project-webservice.herokuapp.com",
+    apiDomain: "http://demo-api-vue.sanbercloud.com",
+    // beritas: [],
+    blogs: [],
     page: 0,
     lengthPage: 0,
     perPage: 0
   }),
 
+  components: {
+    "berita-component": BeritaComponent
+  },
+
   methods: {
     go() {
       const config = {
         method: "get",
-        url: this.apiDomain + "/api/v2/news?page=" + this.page
+        url: this.apiDomain + "/api/v2/blog?page=" + this.page
       };
 
       this.axios(config)
         .then(response => {
-          let { beritas } = response.data;
-          this.beritas = beritas.data;
-          this.page = beritas.current_page;
-          this.lengthPage = beritas.last_page;
-          this.perPage = beritas.per_page;
+          let { blogs } = response.data;
+          this.blogs = blogs.data;
+          this.page = blogs.current_page;
+          this.lengthPage = blogs.last_page;
+          this.perPage = blogs.per_page;
         })
         .catch(error => {
           console.log(error);
         });
     }
+  },
+
+  created() {
+    this.go();
   }
 };
 </script>

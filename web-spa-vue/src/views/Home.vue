@@ -19,33 +19,11 @@
     </div>
 
     <v-layout wrap>
-      <v-flex v-for="berita in beritas" :key="`berita-` + berita.id" xs6>
-        <v-card :to="'/berita/' + berita.id">
-          <v-img
-            :src="
-              berita.gambar
-                ? apiDomain + berita.gambar
-                : 'https://picsum.photos/200/300'
-            "
-            class="white--text"
-            height="200px"
-          >
-            <v-card-title
-              class="fill-height align-end"
-              v-text="berita.title"
-            ></v-card-title>
-          </v-img>
-
-          <v-card-actions>
-            <v-progress-linear color="blue-grey" height="7">
-            </v-progress-linear>
-          </v-card-actions>
-
-          <v-card-actions>
-            <span>{{ berita.title.substring(0, 15) }}...</span>
-          </v-card-actions>
-        </v-card>
-      </v-flex>
+      <berita-component
+        v-for="blog in blogs"
+        :key="`blog-` + blog.id"
+        :blog="blog"
+      ></berita-component>
     </v-layout>
 
     <div class="d-flex justify-space-between pt-7 pb-2">
@@ -56,37 +34,11 @@
     </div>
 
     <v-layout wrap>
-      <v-flex
-        v-for="pengumuman in pengumumans"
-        :key="`pengumuman-` + pengumuman.id"
-        xs6
-      >
-        <v-card :to="'/announcement/' + pengumuman.id">
-          <v-img
-            :src="
-              pengumuman.file
-                ? apiDomain + pengumuman.file
-                : 'https://picsum.photos/200/300'
-            "
-            class="white--text"
-            height="200px"
-          >
-            <v-card-title
-              class="fill-height align-end"
-              v-text="pengumuman.title"
-            ></v-card-title>
-          </v-img>
-
-          <v-card-actions>
-            <v-progress-linear color="blue-grey" height="7">
-            </v-progress-linear>
-          </v-card-actions>
-
-          <v-card-actions>
-            <span>{{ pengumuman.title.substring(0, 15) }}...</span>
-          </v-card-actions>
-        </v-card>
-      </v-flex>
+      <berita-component
+        v-for="blog in blogs"
+        :key="`blog-` + blog.id"
+        :blog="blog"
+      ></berita-component>
     </v-layout>
 
     <div class="py-3" />
@@ -94,57 +46,70 @@
 </template>
 
 <script>
+import BeritaComponent from "../layouts/default/BeritaComponent.vue";
+import PengumumanComponent from "../layouts/default/PengumumanComponent.vue";
+
 export default {
   name: "Home",
 
+  components: {
+    "berita-component": BeritaComponent,
+    "pengumuman-component": PengumumanComponent
+  },
+
   data: () => ({
-    apiDomain: "http://project-webservice.herokuapp.com",
-    beritas: [],
-    pengumumans: [],
+    // apiDomain: "http://project-webservice.herokuapp.com",
+    apiDomain: "http://demo-api-vue.sanbercloud.com",
+    // beritas: [],
+    // pengumumans: [],
+    model: 0,
+    blogs: [],
     items: [
       {
-        src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg"
+        src:
+          "https://images.unsplash.com/photo-1572908721147-0a9eb395762d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8dmlsbGFnZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60"
       },
       {
-        src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg"
+        src:
+          "https://images.unsplash.com/photo-1442544213729-6a15f1611937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHZpbGxhZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=1000&q=60"
       },
       {
-        src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg"
+        src:
+          "https://images.unsplash.com/photo-1592853338606-6df619d6fadd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHZpbGxhZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=1000&q=60"
       },
       {
-        src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg"
+        src:
+          "https://images.unsplash.com/photo-1498122920496-ed9f9aab2051?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fHZpbGxhZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=1000&q=60"
+      },
+      {
+        src:
+          "https://images.unsplash.com/photo-1475332831881-e80974377cb7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1279&q=80"
       }
     ]
   }),
 
+  methods: {
+    go() {
+      const config = {
+        method: "get",
+        url: this.apiDomain + "/api/v2/blog/random/8"
+      };
+
+      this.axios(config)
+        .then(response => {
+          let { blogs } = response.data;
+          this.blogs = blogs;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  },
+
   created() {
-    const config = {
-      method: "get",
-      url: this.apiDomain + "/api/v2/new/random/2",
-      url: this.apiDomain + "/api/v2/announcement/random/2"
-    };
+    console.log(this.$store.state.count);
 
-    this.axios(config)
-      .then(response => {
-        let { beritas } = response.data;
-        this.beritas = beritas;
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    this.axios(config)
-      .then(response => {
-        let { pengumumans } = response.data;
-        this.pengumumans = pengumumans;
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.go();
   }
-
-  // computed: {
-
-  // },
 };
 </script>

@@ -25,6 +25,18 @@ const router = new Router({
       route('Berita', null, 'berita'),
       route('Pengumuman', null, 'pengumuman'),
 
+      {
+        path: '/berita/:id',
+        name: 'berita',
+        component: () => import(/* webpackChunkName: "about" */ '../views/BeritaSatu.vue')
+      },
+
+      {
+        path: '/pengumuman/:id',
+        name: 'Pengumuman',
+        component: () => import(/* webpackChunkName: "about" */ '../views/PengumumanSatu.vue')
+      }
+
     ]),
   ],
 })

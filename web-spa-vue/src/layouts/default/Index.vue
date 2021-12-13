@@ -1,276 +1,231 @@
 <template>
   <v-app>
-    <alert/>
-    <Dialog/>
+    <alert />
+    <Dialog />
     <!-- Bar Atas -->
     <v-app-bar
-    id="default-app-bar"
-    app
-    absolute
-    class="v-bar--underline"
-    color="transparent"
-    :clipped-left="$vuetify.rtl"
-    :clipped-right="!$vuetify.rtl"
-    height="70"
-    flat
-  >
-    <v-app-bar-nav-icon
-      class="hidden-md-and-up"
-      @click="drawer = !drawer"
-    />
+      id="default-app-bar"
+      app
+      absolute
+      class="v-bar--underline"
+      color="transparent"
+      :clipped-left="$vuetify.rtl"
+      :clipped-right="!$vuetify.rtl"
+      height="70"
+      flat
+    >
+      <v-app-bar-nav-icon class="hidden-md-and-up" @click="drawer = !drawer" />
 
-    <default-drawer-toggle class="hidden-sm-and-down" />
+      <default-drawer-toggle class="hidden-sm-and-down" />
 
-    <v-toolbar-title
-      class="font-weight-light text-h5"
-      v-text="name"
-    />
+      <v-toolbar-title class="font-weight-light text-h5" v-text="name" />
 
-    <v-spacer />
+      <v-spacer />
 
-      <v-btn
-    class="ml-2"
-    min-width="0"
-    text
-    to="/"
-    exact
-  >
-    <v-icon>mdi-home</v-icon>
-  </v-btn>
+      <v-btn class="ml-2" min-width="0" text to="/" exact>
+        <v-icon>mdi-home</v-icon>
+      </v-btn>
 
       <v-menu
-    bottom
-    left
-    min-width="200"
-    offset-y
-    origin="top right"
-    transition="scale-transition"
-  >
-    <template v-slot:activator="{ attrs, on }">
-      <v-btn
-        class="ml-2"
-        min-width="0"
-        text
-        v-bind="attrs"
-        v-on="on"
+        bottom
+        left
+        min-width="200"
+        offset-y
+        origin="top right"
+        transition="scale-transition"
       >
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
-    </template>
+        <template v-slot:activator="{ attrs, on }">
+          <v-btn class="ml-2" min-width="0" text v-bind="attrs" v-on="on">
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </template>
 
-    <v-list
-      class="pa-2"
-      v-if="guest">
-        <v-btn
-        block
-        color="primary" class="mb-1" @click="login">
-          <v-icon left>mdi-lock</v-icon>
-          login
-        </v-btn>
-    </v-list>
-    <v-list
-      class="pa-2"
-      v-if="!guest">
-        <v-btn
-        block
-        color="primary" class="mb-1" @click="logout">
-          <v-icon left>mdi-lock</v-icon>
-          logout
-        </v-btn>
-    </v-list>
+        <v-list class="pa-2" v-if="guest">
+          <v-btn block color="primary" class="mb-1" @click="login">
+            <v-icon left>mdi-lock</v-icon>
+            login
+          </v-btn>
+        </v-list>
+        <v-list class="pa-2" v-if="!guest">
+          <v-btn block color="primary" class="mb-1" @click="logout">
+            <v-icon left>mdi-lock</v-icon>
+            logout
+          </v-btn>
+        </v-list>
+      </v-menu>
+    </v-app-bar>
 
-  </v-menu>
-  </v-app-bar>
-
-<!-- SIDEBAR -->
-  <v-navigation-drawer
-    id="default-drawer"
-    v-model="drawer"
-    :dark="dark"
-    :right="$vuetify.rtl"
-    :src="drawerImage ? image : ''"
-    :mini-variant.sync="mini"
-    mini-variant-width="80"
-    app
-    width="260"
-  >
-    <template
-      v-if="drawerImage"
-      #img="props"
+    <!-- SIDEBAR -->
+    <v-navigation-drawer
+      id="default-drawer"
+      v-model="drawer"
+      :dark="dark"
+      :right="$vuetify.rtl"
+      :src="drawerImage ? image : ''"
+      :mini-variant.sync="mini"
+      mini-variant-width="80"
+      app
+      width="260"
     >
-      <v-img
-        :key="image"
-        :gradient="gradient"
-        v-bind="props"
-      />
-    </template>
+      <template v-if="drawerImage" #img="props">
+        <v-img :key="image" :gradient="gradient" v-bind="props" />
+      </template>
 
-    <div class="px-2">
-      
-          <v-list>
-      <v-list-item 
-      v-if="!guest"
-      class="mb-0 justify-space-between pl-3">
-        <v-list-item-avatar>
-          <v-img src="user.photo_profile ? apiDomain + user.photo_profile : 'https://randomuser.me/api/portraits/men/77.jpg'"></v-img>
-        </v-list-item-avatar>
+      <div class="px-2">
+        <v-list>
+          <v-list-item v-if="!guest" class="mb-0 justify-space-between pl-3">
+            <v-list-item-avatar>
+              <v-img
+                :src="
+                  user.photo_profile
+                    ? apiDomain + user.photo_profile
+                    : 'https://randomuser.me/api/portraits/men/77.jpg'
+                "
+              ></v-img>
+            </v-list-item-avatar>
 
-        <v-list-item-content class="pl-2">
-          <v-list-item-title class="text-h3">
-            <strong class="mr-1 font-weight-black"> {{}} </strong>
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+            <v-list-item-content class="pl-2">
+              <v-list-item-title>
+                <span class="mr-1">{{ user.name }}</span>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-      <div
-      class="pa-2"
-      v-if="guest">
-        <v-btn
-        block
-        color="primary" class="mb-1" @click="login">
-          <v-icon left>mdi-lock</v-icon>
-          LOGIN
-        </v-btn>
-        <v-btn block color="success" @click="register">
-          <v-icon left>mdi-account</v-icon>
-          REGISTER
-        </v-btn>
+          <div class="pa-2" v-if="guest">
+            <v-btn block color="primary" class="mb-1" @click="login">
+              <v-icon left>mdi-lock</v-icon>
+              login
+            </v-btn>
+            <v-btn block color="success" @click="register">
+              <v-icon left>mdi-account</v-icon>
+              Register
+            </v-btn>
+          </div>
+        </v-list>
+
+        <v-divider class="mx-3 mb-2" />
+
+        <default-list :items="items" />
       </div>
-    </v-list>
 
-      <v-divider class="mx-3 mb-2" />
+      <template #append v-if="!guest">
+        <div class="pa-4 text-center">
+          <app-btn block class="text-none" color="error" @click="logout">
+            <v-icon left>
+              mdi-lock
+            </v-icon>
 
-      <default-list :items="items" />
-    </div>
+            Log Out
+          </app-btn>
+        </div>
+      </template>
 
-    <template #append v-if="!guest">
-      <div class="pa-4 text-center">
-
-        <app-btn
-          block
-          class="text-none"
-          color="error"
-          @click="logout"
-        >
-          <v-icon left>mdi-lock</v-icon>
-          LOGOUT
-        </app-btn>
-      </div>
-    </template>
-
-    <div class="pt-12" />
-  </v-navigation-drawer>
+      <div class="pt-12" />
+    </v-navigation-drawer>
     <default-view />
     <default-footer />
     <default-settings />
   </v-app>
 </template>
 
-
-
 <script>
-  import { get, sync } from 'vuex-pathify'
-  import { mapActions, mapGetters } from 'vuex'
+import { get, sync } from "vuex-pathify";
+import { mapActions, mapGetters } from "vuex";
 
-  export default {
-    name: 'DefaultLayout',
+export default {
+  name: "DefaultLayout",
 
-    components: {
-      DefaultList: () => import('./List'),
-      DefaultFooter: () => import('./Footer'),
-      DefaultSettings: () => import('./Settings'),
-      DefaultView: () => import('./View'),
-      Alert  : () => import('./Alert.vue'),
-      DefaultDrawerToggle: () => import('./widgets/DrawerToggle'),
-      Dialog : () => import('./Dialog.vue')
+  components: {
+    DefaultList: () => import("./List"),
+    DefaultFooter: () => import("./Footer"),
+    DefaultSettings: () => import("./Settings"),
+    DefaultView: () => import("./View"),
+    Alert: () => import("./Alert.vue"),
+    DefaultDrawerToggle: () => import("./widgets/DrawerToggle"),
+    Dialog: () => import("./Dialog.vue")
+  },
 
-    },
+  data: () => ({
+    // drawer: true,
+    // menus: [
+    //   { title: "Home", icon: "mdi-home", route: "/" },
+    //   { title: "Berita", icon: "mdi-note", route: "/berita" },
+    //   {
+    //     title: "Pengumuman",
+    //     icon: "mdi-clipboard-outline",
+    //     route: "/pengumuman"
+    //   }
+    // ],
+    // apiDomain: "http://localhost:8081/"
+    // apiDomain: "http://project-webservice.herokuapp.com",
+    apiDomain: "http://demo-api-vue.sanbercloud.com"
+  }),
 
-    data: () => ({
-      // drawer: true,
-      menus: [
-        {title: 'Home', icon: 'mdi-home', route: '/'},
-        {title: 'Berita', icon: 'mdi-note', route: '/berita'},
-        {title: 'Pengumuman', icon: 'mdi-clipboard-outline', route: '/pengumuman'}
-      ],
-      apiDomain: "http://localhost:8081/"
-      // apiDomain: "http://project-webservice.herokuapp.com",
-    }),
-
-    methods : {
-    logout(){
+  methods: {
+    logout() {
       let config = {
-          method: 'post',
-          // url: this.apiDomain + "/api/v2/auth/logout",
-          url: this.apiDomain + "logout",
-          headers: {
-            'Authorization' : 'Bearer' + this.token,
-          },
+        method: "post",
+        url: this.apiDomain + "/api/v2/auth/logout",
+        // url: this.apiDomain + "logout",
+        headers: {
+          Authorization: "Bearer" + this.token
         }
+      };
       this.axios(config)
         .then(() => {
-            this.setToken('')
-            this.setUser({})
-            this.setAlert({
-              status : true,
-              color : 'success',
-              text : 'Anda berhasil logout'
-            }) 
-          })
-        .catch((response) => {
-            this.setAlert({
-              status: true,
-              color: 'error',
-              text: responses.data.error,
-            })
-          })
+          this.setToken("");
+          this.setUser({});
+
+          this.setAlert({
+            status: true,
+            color: "success",
+            text: "Anda berhasil logout"
+          });
+        })
+        .catch(response => {
+          this.setAlert({
+            status: true,
+            color: "error",
+            text: response.data.error
+          });
+        });
     },
 
-    login(){
-      this.setDialogComponent({'component' : 'login'})
+    login() {
+      this.setDialogComponent({ component: "login" });
     },
 
-    register(){
-      this.setDialogComponent({'component' : 'register'})
+    register() {
+      this.setDialogComponent({ component: "register" });
     },
-      ...mapActions({
-      setAlert                      : 'alert/set',
-      setDialogComponent            : 'dialog/setComponent'
+    ...mapActions({
+      setAlert: "alert/set",
+      setDialogComponent: "dialog/setComponent",
+      setToken: "auth/setToken",
+      setUser: "auth/setuser",
+      checkToken: "auth/checkToken"
+    })
+  },
 
+  computed: {
+    ...mapGetters({
+      guest: "auth/guest",
+      user: "auth/user",
+      token: "auth/token"
     }),
-    },
-    
-    
-    computed: {
-      ...mapGetters({
-        guest: 'auth/guest',
-        user: 'auth/user',
-        token: 'auth/token'
-      }),
 
-      ...get('user', [
-        'dark',
-        'gradient',
-        'image',
-      ]),
-      ...get('app', [
-        'items',
-        'version',
-      ]),
-      ...sync('app', [
-        'drawer',
-        'drawerImage',
-        'mini',
-      ]),
-      name: get('route/name'),
-    },
+    ...get("user", ["dark", "gradient", "image"]),
+    ...get("app", ["items", "version"]),
+    ...sync("app", ["drawer", "drawerImage", "mini"]),
+    name: get("route/name")
+  },
 
-    mounted(){
-      if(this.token){
-        this.checkToken(this.token)
-      }
-    },
+  mounted() {
+    if (this.token) {
+      this.checkToken(this.token);
+    }
   }
+};
 </script>
 <style lang="sass">
 #default-drawer
