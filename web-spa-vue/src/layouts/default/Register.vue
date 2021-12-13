@@ -46,21 +46,56 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     data(){
         return {
-            email : '',
-            showPassword: false,
-            password: '',
+            nama: '',
+            username: '',
+            email : ''
         }
     },
     methods : {
+        ...mapActions({
+            setAlert: 'alert/set',
+            setToken: 'auth/setToken'
+        }),
+
         close() {
             this.$emit('closed', false)
         },
 
         submit() {
-            alert('Berhasil Register')
+            const config = {
+                method: "post",
+                url: this.apiDomain + "/api/v2/auth/register",
+                data: {
+                    'email' : this.email,
+                    'nama' : this.nama,
+                    'username' : this.username
+                }
+            };
+
+            this.axios(config)
+                .then((response) => {
+                    this.setToken(response.data.access_token)
+                    console.log(response.data)
+                    this.setAlert({
+                        status: true,
+                        color: 'success',
+                        text: 'Berhasil Register',
+                    })
+                    this.close()
+                })
+                .catch((response) => {
+                    console.log(response)
+                    this.setAlert({
+                        status: true,
+                        color: 'error',
+                        text: 'Gagal Register',
+                    })
+                })
         }
 
     },

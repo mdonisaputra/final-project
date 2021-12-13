@@ -83,7 +83,7 @@
   </v-app-bar>
 
 <!-- SIDEBAR -->
-    <v-navigation-drawer
+  <v-navigation-drawer
     id="default-drawer"
     v-model="drawer"
     :dark="dark"
@@ -112,14 +112,12 @@
       v-if="!guest"
       class="mb-0 justify-space-between pl-3">
         <v-list-item-avatar>
-          <v-img
-            src="https://randomuser.me/api/portraits/men/77.jpg"
-          />
+          <v-img src="user.photo_profile ? apiDomain + user.photo_profile : 'https://randomuser.me/api/portraits/men/77.jpg'"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-content class="pl-2">
           <v-list-item-title class="text-h3">
-            <strong class="mr-1 font-weight-black">Nama User</strong>
+            <strong class="mr-1 font-weight-black"> {{}} </strong>
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -131,7 +129,7 @@
         block
         color="primary" class="mb-1" @click="login">
           <v-icon left>mdi-lock</v-icon>
-          login
+          Login
         </v-btn>
         <v-btn block color="success" @click="register">
           <v-icon left>mdi-account</v-icon>
@@ -154,10 +152,7 @@
           color="error"
           @click="logout"
         >
-          <v-icon left>
-            mdi-lock
-          </v-icon>
-
+          <v-icon left>mdi-lock</v-icon>
           Log Out
         </app-btn>
       </div>
