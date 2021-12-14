@@ -6,6 +6,7 @@
     />
     <div class="py-3" />
 
+    <create-news v-if="this.token" />
     <v-layout wrap>
       <berita-component
         v-for="berita in beritas"
@@ -28,6 +29,8 @@
 
 <script>
 import BeritaComponent from "../layouts/default/BeritaComponent.vue";
+import CreateNews from "../layouts/default/CreateNews";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Berita",
@@ -42,11 +45,13 @@ export default {
   }),
 
   components: {
-    "berita-component": BeritaComponent
+    "berita-component": BeritaComponent,
+    "create-news": CreateNews
   },
 
   methods: {
     go() {
+      console.log(this.token);
       const config = {
         method: "get",
         // url: this.apiDomain + "/api/v2/blog?page=" + this.page
@@ -67,6 +72,11 @@ export default {
           console.log(error);
         });
     }
+  },
+  computed: {
+    ...mapGetters({
+      token: "auth/token"
+    })
   },
 
   created() {

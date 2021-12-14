@@ -2,11 +2,7 @@
   <v-flex xs6>
     <v-card :to="'/berita/' + berita.id">
       <v-img
-        :src="
-          berita.gambar
-            ? apiDomain + berita.gambar
-            : 'https://picsum.photos/200/300'
-        "
+        :src="berita.gambar ? berita.gambar : 'https://picsum.photos/200/300'"
         class="white--text"
         height="200px"
       >

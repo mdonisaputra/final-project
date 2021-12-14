@@ -1,12 +1,9 @@
 <template>
   <div>
-    <DialogKecil />
     <v-card v-if="pengumuman.id">
       <v-img
         :src="
-          pengumuman.file
-            ? apiDomain + pengumuman.file
-            : 'https://picsum.photos/200/300'
+          pengumuman.file ? pengumuman.file : 'https://picsum.photos/200/300'
         "
         class="white--text"
         height="400px"
@@ -34,11 +31,10 @@
           </tbody>
         </v-simple-table>
         <div class="text-left pt-6 pb-2" v-if="!guest">
-          <v-btn class="primary" @click="comment">
+          <!-- <v-btn class="primary" @click="comment">
             <v-icon>mdi-account-edit</v-icon> Komentar
-          </v-btn>
+          </v-btn> -->
         </div>
-        <comment />
       </v-card-text>
     </v-card>
 
@@ -65,9 +61,7 @@ export default {
     apiDomain: "http://project-webservice.herokuapp.com"
   }),
 
-  components: {
-    DialogKecil: () => import("../layouts/default/DialogKecil.vue")
-  },
+  components: {},
 
   methods: {
     go() {
@@ -87,13 +81,7 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    },
-    comment() {
-      this.setDialogComponent({ component: "comment" });
-    },
-    ...mapActions({
-      setDialogComponent: "dialog/setComponent"
-    })
+    }
   },
 
   created() {

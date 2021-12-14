@@ -86,7 +86,7 @@
 
             <v-list-item-content class="pl-2">
               <v-list-item-title>
-                <span class="mr-1">{{ user.name }}</span>
+                <span class="mr-1">{{ user.nama }}</span>
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -157,7 +157,7 @@ export default {
     //   }
     // ],
     // apiDomain: "http://localhost:8081/"
-    apiDomain: "http://project-webservice.herokuapp.com"
+    apiDomain: "https://project-webservice.herokuapp.com"
     // apiDomain: "http://demo-api-vue.sanbercloud.com"
   }),
 
@@ -165,10 +165,10 @@ export default {
     logout() {
       let config = {
         method: "post",
-        url: this.apiDomain + "/api/login",
+        url: this.apiDomain + "/api/auth/login",
         // url: this.apiDomain + "logout",
         headers: {
-          Authorization: "Bearer" + this.token
+          Authorization: "Bearer " + this.token
         }
       };
       this.axios(config)
@@ -221,13 +221,13 @@ export default {
     ...get("app", ["items", "version"]),
     ...sync("app", ["drawer", "drawerImage", "mini"]),
     name: get("route/name")
-  },
-
-  mounted() {
-    if (this.token) {
-      this.checkToken(this.token);
-    }
   }
+
+  // mounted() {
+  //   if (this.token) {
+  //     this.checkToken(this.token);
+  //   }
+  // }
 };
 </script>
 <style lang="sass">

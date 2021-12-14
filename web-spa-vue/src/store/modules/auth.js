@@ -17,7 +17,13 @@ export default{
     actions: {
         setToken: ({commit,dispatch}, payload) => {
             commit('setToken', payload)
-            dispatch('checkToken', payload)
+            // dispatch('checkToken', payload)
+
+        },
+        setUser: ({commit,dispatch}, payload) => {
+            commit('setUser', payload)
+            // dispatch('checkToken', payload)
+
         },
         // checkToken: ({commit}, payload) => {
         //     let config = {
@@ -43,8 +49,9 @@ export default{
         // },
     },
     getters: {
-        user: state => state.user,
-        token: state => state.token,
+
+        user: state => { return state.user},
+        token: state => {return state.token},
         guest: state => Object.keys(state.user).length === 0,
     }
 }

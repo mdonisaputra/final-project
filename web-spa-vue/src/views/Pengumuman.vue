@@ -6,6 +6,8 @@
     />
     <div class="py-3" />
 
+    <create-peng v-if="this.token" />
+
     <v-layout wrap>
       <pengumuman-component
         v-for="pengumuman in pengumumans"
@@ -28,6 +30,8 @@
 
 <script>
 import PengumumanComponent from "../layouts/default/PengumumanComponent.vue";
+import CreateAnnouncement from "../layouts/default/CreateAnnouncement";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Pengumuman",
@@ -41,7 +45,8 @@ export default {
   }),
 
   components: {
-    "pengumuman-component": PengumumanComponent
+    "pengumuman-component": PengumumanComponent,
+    "create-peng": CreateAnnouncement
   },
 
   methods: {
@@ -66,6 +71,11 @@ export default {
           console.log(error);
         });
     }
+  },
+  computed: {
+    ...mapGetters({
+      token: "auth/token"
+    })
   },
 
   created() {

@@ -50,7 +50,8 @@ export default {
   methods: {
     ...mapActions({
       setAlert: "alert/set",
-      setToken: "auth/setToken"
+      setToken: "auth/setToken",
+      setUser: "auth/setUser"
     }),
 
     close() {
@@ -69,7 +70,8 @@ export default {
 
       this.axios(config)
         .then(response => {
-          this.setToken(response.data.access_token);
+          this.setToken(response.data.data.token);
+          this.setUser(response.data.data.user);
           console.log(response.data);
           this.setAlert({
             status: true,

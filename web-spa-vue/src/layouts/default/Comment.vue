@@ -32,19 +32,57 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
       isi: ""
     };
   },
+  computed: {
+    ...mapGetters({
+      token: "auth/token"
+    })
+  },
   methods: {
     close() {
       this.$emit("closed", false);
     },
+    ...mapActions({
+      setAlert: "alert/set"
+    }),
 
     submit() {
-      alert("masuk metod komen");
+      const config = {
+        method: "post",
+        url: this.apiDomain + "/api/newscomment",
+        headers: {
+          Authorization: "Bearer " + this.token
+        },
+        data: {
+          isi: this.isi
+        }
+      };
+
+      this.axios(config)
+        .then(response => {
+          console.log(response.data);
+          this.setAlert({
+            status: true,
+            color: "success",
+            text: "Berhasil komen"
+          });
+          this.clearform();
+          this.close();
+        })
+        .catch(response => {
+          console.log(response);
+          this.setAlert({
+            status: true,
+            color: "error",
+            text: "Gagal Komen"
+          });
+        });
     }
   }
 };
