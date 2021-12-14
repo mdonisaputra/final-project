@@ -16,7 +16,7 @@ Website Pemerintah Sukamaju
 
 
 ## Link Demo
-
+- Link Dokumentasi Postman : https://documenter.getpostman.com/view/18391824/UVR7LUGi
 - Link Demo Video : 
 - Link Deploy : 
   1. News : https://project-webservice.herokuapp.com/api/news
