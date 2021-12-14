@@ -65,7 +65,7 @@ class AnnounceController extends Controller
         $validator = Validator::make($request->all(), [
             'judul'   => 'required',
             'deskripsi' => 'required',
-            'file' => 'required',
+            'file' => 'nullable',
         ]);
         
         //response error validation
@@ -80,7 +80,7 @@ class AnnounceController extends Controller
             'judul'     => $request->judul,
             'user_id' =>$user->id,
             'deskripsi'   => $request->deskripsi,
-            'file' => $request->file
+            'file' => $nullable
         ]);
 
         //success save to database
@@ -115,7 +115,7 @@ class AnnounceController extends Controller
         $validator = Validator::make($request->all(), [
             'judul'   => 'required',
             'deskripsi' => 'required',
-            'file' => 'required',
+            'file' => 'nullable',
         ]);
         
         //response error validation
@@ -142,7 +142,7 @@ class AnnounceController extends Controller
             $announcement->update([
                 'judul'     => $request->judul,
                 'deskripsi'   => $request->deskripsi,
-                'file' => $request->file
+                'file' => $nullable
             ]);
             
             return response()->json([

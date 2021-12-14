@@ -64,7 +64,7 @@ class NewsController extends Controller
         $validator = Validator::make($allRequest, [  //$request->all(), [
             'judul'   => 'required',
             'deskripsi' => 'required',
-            'gambar' => 'required',
+            'gambar' => 'nullable',
         ]);
         
         //response error validation
@@ -79,7 +79,7 @@ class NewsController extends Controller
             'judul'     => $request->judul,
             'user_id' =>$user->id,
             'deskripsi'   => $request->deskripsi,
-            'gambar' => $request->gambar
+            'gambar' => $nullable
         ]);
 
         //success save to database
@@ -116,7 +116,7 @@ class NewsController extends Controller
         $validator = Validator::make($allRequest, [  //$request->all(), [
             'judul'   => 'required',
             'deskripsi' => 'required',
-            'gambar' => 'required',
+            'gambar' => 'nullable',
         ]);
         
         //response error validation
@@ -141,7 +141,7 @@ class NewsController extends Controller
             $new->update([
                 'judul'     => $request->judul,
                 'deskripsi'   => $request->deskripsi,
-                'gambar' => $request->gambar
+                'gambar' => $nullable
             ]);
             
             return response()->json([

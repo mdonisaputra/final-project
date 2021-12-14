@@ -17,7 +17,7 @@ class CreateNewsTable extends Migration
             $table->uuid('id')->primary();
             $table->text('judul');
             $table->text('deskripsi');
-            $table->string('gambar');
+            $table->string('gambar')->nullable();
             $table->uuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
