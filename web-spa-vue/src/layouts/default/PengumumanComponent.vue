@@ -1,10 +1,17 @@
 <template>
   <v-flex xs6>
     <v-card :to="'/pengumuman/' + pengumuman.id">
-      <v-img
+      <!-- <v-img
         :src="
-          pengumuman.file ? pengumuman.file : 'https://picsum.photos/200/300'
+          pengumuman.file
+            ? apiDomain + pengumuman.file
+            : 'https://picsum.photos/200/300'
         "
+        class="white--text"
+        height="200px"
+      > -->
+      <v-img
+        src="https://picsum.photos/200/300"
         class="white--text"
         height="200px"
       >

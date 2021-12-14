@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" v-bind="attrs" v-on="on" class="mb-6">
-          Buat Pengumuman
+          Komentar
         </v-btn>
       </template>
 
@@ -11,32 +11,23 @@
         <v-card-title
           class="d-flex justify-space-between text-h5 primary lighten-2 white--text"
         >
-          Buat Pengumuman
+          Komentar
           <v-btn icon dark @click="close">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
         <v-card-text>
           <div class="text-center">
-            Bikin Berita Terbaru Dan Bermanfaat
+            Komentari Berita
           </div>
           <v-form ref="form">
             <v-text-field
-              v-model="judul"
-              label="Judul Pengumuman"
-              required
-            ></v-text-field>
-            <v-text-field
-              v-model="deskripsi"
-              label="Deskripsi Pengumuman"
-              required
-            ></v-text-field>
-            <v-text-field
-              v-model="file"
-              label="Berupa Link"
+              v-model="isi"
+              label="Isi Komentar"
               required
             ></v-text-field>
           </v-form>
+          <regotp />
         </v-card-text>
 
         <v-divider></v-divider>
@@ -51,15 +42,13 @@
     </v-dialog>
   </div>
 </template>
-<script>
-import { mapActions, mapGetters } from "vuex";
 
+<script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      judul: "",
-      deskripsi: "",
-      file: "",
+      isi: "",
       apiDomain: "https://project-webservice.herokuapp.com",
       dialog: false
     };
@@ -69,32 +58,29 @@ export default {
       token: "auth/token"
     })
   },
-
   methods: {
-    clearform() {
-      this.judul = "";
-      this.deskripsi = "";
-      this.file = "";
+    close() {
+      this.dialog = false;
     },
     ...mapActions({
       setAlert: "alert/set"
     }),
-    close() {
-      this.dialog = false;
+    clearform() {
+      this.isi = "";
     },
 
     submit() {
+      let { id } = this.$route.params;
       console.log(this.token);
+      console.log(this.id);
       const config = {
         method: "post",
-        url: this.apiDomain + "/api/announcement",
+        url: `${this.apiDomain}/api/newscomment?new_id=${id}`,
         headers: {
           Authorization: "Bearer " + this.token
         },
         data: {
-          judul: this.judul,
-          deskripsi: this.deskripsi,
-          file: this.file
+          isi: this.isi
         }
       };
 
@@ -104,7 +90,7 @@ export default {
           this.setAlert({
             status: true,
             color: "success",
-            text: "Berhasil Buat Pengumuman"
+            text: "Berhasil komen"
           });
           this.clearform();
           this.close();
@@ -114,7 +100,7 @@ export default {
           this.setAlert({
             status: true,
             color: "error",
-            text: "Gagal Buat Pengumuman"
+            text: "Gagal Komen"
           });
         });
     }

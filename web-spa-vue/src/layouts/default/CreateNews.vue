@@ -33,11 +33,10 @@
             ></v-text-field>
             <v-text-field
               v-model="gambar"
-              label="File gambar"
+              label="Wajib Berupa Link Foto"
               required
             ></v-text-field>
           </v-form>
-          <regotp />
         </v-card-text>
 
         <v-divider></v-divider>

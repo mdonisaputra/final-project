@@ -29,16 +29,21 @@
             ></v-text-field>
             <v-text-field
               v-model="password"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPassword ? 'text' : 'password'"
               label="Masukkan Password"
               required
+              @click:append="showPassword = !showPassword"
             ></v-text-field>
             <v-text-field
               v-model="password_confirmation"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPassword ? 'text' : 'password'"
               label="Masukkan Konfirmasi Password"
               required
+              @click:append="showPassword = !showPassword"
             ></v-text-field>
           </v-form>
-          <regotp />
         </v-card-text>
 
         <v-divider></v-divider>
@@ -62,6 +67,7 @@ export default {
       email: "",
       password: "",
       password_confirmation: "",
+      showPassword: false,
       apiDomain: "https://project-webservice.herokuapp.com",
       dialog: false
     };
