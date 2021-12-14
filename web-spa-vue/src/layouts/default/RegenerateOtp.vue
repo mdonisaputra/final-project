@@ -1,9 +1,9 @@
 <template>
-  <div class="text-center">
+  <div class="text-left">
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" text v-bind="attrs" v-on="on">
-          Verif OTP
+        <v-btn x-small color="primary" text v-bind="attrs" v-on="on">
+          Regenerate Otp
         </v-btn>
       </template>
 
@@ -18,24 +18,28 @@
         </v-card-title>
         <v-card-text>
           <div class="text-center">
-            Silakan Masukkan Kode OTP yang telah dikirim ke email anda hanya
-            berlaku 10 menit
+            Silakan Masukkan email anda
           </div>
           <v-form ref="form">
             <v-text-field
-              v-model="otp"
-              label="Silahkan Masukkan OTP"
+              v-model="email"
+              label="Masukkan Email"
               required
+              append-icon="mdi-email"
             ></v-text-field>
+            <!-- <v-text-field
+              v-model="otp"
+              label="Masukkan OTP Lama"
+              required
+            ></v-text-field> -->
           </v-form>
-          <regotp />
         </v-card-text>
 
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="submit">
+          <v-btn color="primary" text @click="submit">
             Submit
           </v-btn>
         </v-card-actions>
@@ -45,22 +49,19 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-import RegenerateOtp from "./RegenerateOtp";
 
 export default {
   data() {
     return {
-      otp: "",
+      email: "",
+      // otp: "",
       apiDomain: "https://project-webservice.herokuapp.com",
       dialog: false
     };
   },
-  components: {
-    regotp: RegenerateOtp
-  },
   methods: {
     clearform() {
-      this.otp = "";
+      this.email = "";
     },
     ...mapActions({
       setAlert: "alert/set"
@@ -72,9 +73,9 @@ export default {
     submit() {
       const config = {
         method: "post",
-        url: this.apiDomain + "/api/auth/verification",
+        url: this.apiDomain + "/api/auth/regenerate-otp-code",
         data: {
-          otp: this.otp
+          email: this.email
         }
       };
 
@@ -84,7 +85,7 @@ export default {
           this.setAlert({
             status: true,
             color: "success",
-            text: "Berhasil Verifikasi OTP, Silahkan Buat Password"
+            text: "Berhasil Regenerate OTP, Silahkan Verifikasi OTP"
           });
           this.clearform();
           this.close();
@@ -94,7 +95,7 @@ export default {
           this.setAlert({
             status: true,
             color: "error",
-            text: "Gagal Verifikasi OTP"
+            text: "Email Belum Terdaftar"
           });
         });
     }

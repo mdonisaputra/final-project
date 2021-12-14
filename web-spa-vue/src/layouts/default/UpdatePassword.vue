@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" text v-bind="attrs" v-on="on">
-          Verif OTP
+          Update Password
         </v-btn>
       </template>
 
@@ -11,20 +11,30 @@
         <v-card-title
           class="d-flex justify-space-between text-h5 primary lighten-2 white--text"
         >
-          Verifikasi OTP
+          Update Password
           <v-btn icon dark @click="close">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
         <v-card-text>
           <div class="text-center">
-            Silakan Masukkan Kode OTP yang telah dikirim ke email anda hanya
-            berlaku 10 menit
+            Silakan Buat Password, Jika Belum Verifikasi Silahkan Verifikasi OTP
+            terlebih Dahulu <otpverif />
           </div>
           <v-form ref="form">
             <v-text-field
-              v-model="otp"
-              label="Silahkan Masukkan OTP"
+              v-model="email"
+              label="Masukkan Email"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="password"
+              label="Masukkan Password"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="password_confirmation"
+              label="Masukkan Konfirmasi Password"
               required
             ></v-text-field>
           </v-form>
@@ -32,7 +42,6 @@
         </v-card-text>
 
         <v-divider></v-divider>
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="primary" @click="submit">
@@ -45,18 +54,20 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-import RegenerateOtp from "./RegenerateOtp";
+import OtpVerif from "./OtpVerif";
 
 export default {
   data() {
     return {
-      otp: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
       apiDomain: "https://project-webservice.herokuapp.com",
       dialog: false
     };
   },
   components: {
-    regotp: RegenerateOtp
+    otpverif: OtpVerif
   },
   methods: {
     clearform() {
@@ -72,9 +83,11 @@ export default {
     submit() {
       const config = {
         method: "post",
-        url: this.apiDomain + "/api/auth/verification",
+        url: this.apiDomain + "/api/auth/update-password",
         data: {
-          otp: this.otp
+          email: this.email,
+          password: this.password,
+          password_confirmation: this.password_confirmation
         }
       };
 
@@ -84,7 +97,7 @@ export default {
           this.setAlert({
             status: true,
             color: "success",
-            text: "Berhasil Verifikasi OTP, Silahkan Buat Password"
+            text: "Berhasil Update Password, Silahkan Login"
           });
           this.clearform();
           this.close();
@@ -94,7 +107,8 @@ export default {
           this.setAlert({
             status: true,
             color: "error",
-            text: "Gagal Verifikasi OTP"
+            text:
+              "Gagal Update Password, Email belum terdaftar atau belum verifikasi OTP"
           });
         });
     }

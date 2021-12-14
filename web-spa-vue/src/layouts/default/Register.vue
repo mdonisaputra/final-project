@@ -28,7 +28,8 @@
           append-icon="mdi-email"
         ></v-text-field>
 
-        <div class="d-flex justify-space-between">
+        <div class="d-flex justify-space-between mt-06">
+          <updatepassword />
           <v-btn color="primary lighten-1" @click="submit">Register </v-btn>
           <otpverif />
         </div>
@@ -40,6 +41,7 @@
 <script>
 import { mapActions } from "vuex";
 import OtpVerif from "./OtpVerif";
+import UpdatePassword from "./UpdatePassword";
 
 export default {
   data() {
@@ -51,7 +53,8 @@ export default {
     };
   },
   components: {
-    otpverif: OtpVerif
+    otpverif: OtpVerif,
+    updatepassword: UpdatePassword
   },
   methods: {
     clearform() {
