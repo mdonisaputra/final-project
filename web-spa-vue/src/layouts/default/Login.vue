@@ -44,7 +44,7 @@ export default {
       email: "",
       showPassword: false,
       password: "",
-      apiDomain: "http://demo-api-vue.sanbercloud.com"
+      apiDomain: "http://project-webservice.herokuapp.com"
     };
   },
   methods: {
@@ -60,7 +60,7 @@ export default {
     submit() {
       const config = {
         method: "post",
-        url: this.apiDomain + "/api/v2/auth/login",
+        url: this.apiDomain + "/api/auth/login",
         data: {
           email: this.email,
           password: this.password

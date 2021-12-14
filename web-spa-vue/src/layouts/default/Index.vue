@@ -146,7 +146,7 @@ export default {
   },
 
   data: () => ({
-    // drawer: true,
+    guest: true,
     // menus: [
     //   { title: "Home", icon: "mdi-home", route: "/" },
     //   { title: "Berita", icon: "mdi-note", route: "/berita" },
@@ -157,15 +157,15 @@ export default {
     //   }
     // ],
     // apiDomain: "http://localhost:8081/"
-    // apiDomain: "http://project-webservice.herokuapp.com",
-    apiDomain: "http://demo-api-vue.sanbercloud.com"
+    apiDomain: "http://project-webservice.herokuapp.com"
+    // apiDomain: "http://demo-api-vue.sanbercloud.com"
   }),
 
   methods: {
     logout() {
       let config = {
         method: "post",
-        url: this.apiDomain + "/api/v2/auth/logout",
+        url: this.apiDomain + "/api/login",
         // url: this.apiDomain + "logout",
         headers: {
           Authorization: "Bearer" + this.token
@@ -193,6 +193,7 @@ export default {
 
     login() {
       this.setDialogComponent({ component: "login" });
+      // this.guest = false;
     },
 
     register() {
@@ -202,7 +203,7 @@ export default {
       setAlert: "alert/set",
       setDialogComponent: "dialog/setComponent",
       setToken: "auth/setToken",
-      setUser: "auth/setuser",
+      setUser: "auth/setUser",
       checkToken: "auth/checkToken"
     })
   },

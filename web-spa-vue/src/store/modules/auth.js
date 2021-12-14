@@ -22,7 +22,7 @@ export default{
         checkToken: ({commit}, payload) => {
             let config = {
                 method: "post",
-                url: "http://demo-api-vue.sanbercloud.com/api/v2/auth/me",
+                url: "http://project-webservice.herokuapp.com/api/auth/login",
                 // url: 'http://project-webservice.herokuapp.com/api/v2/auth/me',
                 headers: {
                     'Authorization': 'Bearer' + payload,

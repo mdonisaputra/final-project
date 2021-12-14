@@ -4,12 +4,13 @@
       heading="Berita"
       link="Berisi Kumpulan Berita Terbaru Dari Desa Sukamaju"
     />
+    <div class="py-3" />
 
     <v-layout wrap>
       <berita-component
-        v-for="blog in blogs"
-        :key="`blog-` + blog.id"
-        :blog="blog"
+        v-for="berita in beritas"
+        :key="`berita-` + berita.id"
+        :berita="berita"
       ></berita-component>
     </v-layout>
 
@@ -32,10 +33,9 @@ export default {
   name: "Berita",
 
   data: () => ({
-    // apiDomains: "http://project-webservice.herokuapp.com",
-    apiDomain: "http://demo-api-vue.sanbercloud.com",
-    // beritas: [],
-    blogs: [],
+    apiDomain: "http://project-webservice.herokuapp.com",
+    // apiDomain: "http://demo-api-vue.sanbercloud.com",
+    beritas: [],
     page: 0,
     lengthPage: 0,
     perPage: 0
@@ -49,16 +49,19 @@ export default {
     go() {
       const config = {
         method: "get",
-        url: this.apiDomain + "/api/v2/blog?page=" + this.page
+        // url: this.apiDomain + "/api/v2/blog?page=" + this.page
+        url: this.apiDomain + "/api/news"
       };
 
       this.axios(config)
         .then(response => {
-          let { blogs } = response.data;
-          this.blogs = blogs.data;
-          this.page = blogs.current_page;
-          this.lengthPage = blogs.last_page;
-          this.perPage = blogs.per_page;
+          let { data } = response.data;
+          this.beritas = data;
+          // this.beritas = data.data;
+          this.page = data.current_page;
+          this.lengthPage = data.last_page;
+          this.perPage = data.per_page;
+          console.log(this.beritas);
         })
         .catch(error => {
           console.log(error);

@@ -1,17 +1,19 @@
 <template>
   <div>
     <DialogKecil />
-    <v-card v-if="blog.id">
+    <v-card v-if="berita.id">
       <v-img
         :src="
-          blog.photo ? apiDomain + blog.photo : 'https://picsum.photos/200/300'
+          berita.gambar
+            ? apiDomain + berita.gambar
+            : 'https://picsum.photos/200/300'
         "
         class="white--text"
         height="400px"
       >
         <v-card-title
           class="fill-height align-end text-h2 font-weight-bold"
-          v-text="blog.title"
+          v-text="berita.judul"
         >
         </v-card-title>
       </v-img>
@@ -21,12 +23,12 @@
           <tbody>
             <tr>
               <td><v-icon>mdi-format-title</v-icon> Judul</td>
-              <td class="blue--text">{{ blog.title }}</td>
+              <td class="blue--text">{{ berita.judul }}</td>
             </tr>
             <tr>
               <td><v-icon>mdi-note</v-icon> Deskripsi</td>
               <td>
-                {{ blog.description }}
+                {{ berita.deskripsi }}
               </td>
             </tr>
           </tbody>
@@ -59,8 +61,8 @@ import { mapActions } from "vuex";
 
 export default {
   data: () => ({
-    blog: {},
-    apiDomain: "http://demo-api-vue.sanbercloud.com"
+    berita: {},
+    apiDomain: "http://project-webservice.herokuapp.com"
   }),
 
   components: {
@@ -73,14 +75,14 @@ export default {
 
       const config = {
         method: "get",
-        url: `${this.apiDomain}/api/v2/blog/${id}`
+        url: `${this.apiDomain}/api/news/${id}`
       };
 
       this.axios(config)
         .then(response => {
-          let { blog } = response.data;
-          console.log(blog.photo);
-          this.blog = blog;
+          let { data } = response.data;
+          console.log(data.gambar);
+          this.berita = data;
         })
         .catch(error => {
           console.log(error);

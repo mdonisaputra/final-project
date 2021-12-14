@@ -5,7 +5,7 @@ import pathify from '@/plugins/vuex-pathify'
 import VuexPersist from 'vuex-persist'
 
 const vuexPersist = new VuexPersist({
-  key: 'sanbercode',
+  key: '123456',
   storage: localStorage
 });
 

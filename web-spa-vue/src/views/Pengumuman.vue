@@ -8,9 +8,9 @@
 
     <v-layout wrap>
       <pengumuman-component
-        v-for="blog in blogs"
-        :key="`blog-` + blog.id"
-        :blog="blog"
+        v-for="pengumuman in pengumumans"
+        :key="`pengumuman-` + pengumuman.id"
+        :pengumuman="pengumuman"
       ></pengumuman-component>
     </v-layout>
 
@@ -33,8 +33,8 @@ export default {
   name: "Pengumuman",
 
   data: () => ({
-    apiDomain: "http://demo-api-vue.sanbercloud.com",
-    blogs: [],
+    apiDomain: "http://project-webservice.herokuapp.com",
+    pengumumans: [],
     page: 0,
     lengthPage: 0,
     perPage: 0
@@ -48,16 +48,19 @@ export default {
     go() {
       const config = {
         method: "get",
-        url: this.apiDomain + "/api/v2/blog?page=" + this.page
+        // url: this.apiDomain + "/api/announcement?page=" + this.page
+        url: this.apiDomain + "/api/announcement"
       };
 
       this.axios(config)
         .then(response => {
-          let { blogs } = response.data;
-          this.blogs = blogs.data;
-          this.page = blogs.current_page;
-          this.lengthPage = blogs.last_page;
-          this.perPage = blogs.per_page;
+          let { data } = response.data;
+          this.pengumumans = data;
+          // this.pengumumans = data.data;
+          this.page = data.current_page;
+          this.lengthPage = data.last_page;
+          this.perPage = data.per_page;
+          console.log(this.pengumumans);
         })
         .catch(error => {
           console.log(error);

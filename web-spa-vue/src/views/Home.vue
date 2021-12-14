@@ -20,9 +20,9 @@
 
     <v-layout wrap>
       <berita-component
-        v-for="blog in blogs"
-        :key="`blog-` + blog.id"
-        :blog="blog"
+        v-for="berita in beritas"
+        :key="`berita-` + berita.id"
+        :berita="berita"
       ></berita-component>
     </v-layout>
 
@@ -34,11 +34,11 @@
     </div>
 
     <v-layout wrap>
-      <berita-component
-        v-for="blog in blogs"
-        :key="`blog-` + blog.id"
-        :blog="blog"
-      ></berita-component>
+      <pengumuman-component
+        v-for="pengumuman in pengumumans"
+        :key="`pengumuman-` + pengumuman.id"
+        :pengumuman="pengumuman"
+      ></pengumuman-component>
     </v-layout>
 
     <div class="py-3" />
@@ -58,10 +58,9 @@ export default {
   },
 
   data: () => ({
-    // apiDomain: "http://project-webservice.herokuapp.com",
-    apiDomain: "http://demo-api-vue.sanbercloud.com",
-    // beritas: [],
-    // pengumumans: [],
+    apiDomain: "http://project-webservice.herokuapp.com",
+    beritas: [],
+    pengumumans: [],
     model: 0,
     blogs: [],
     items: [
@@ -92,13 +91,32 @@ export default {
     go() {
       const config = {
         method: "get",
-        url: this.apiDomain + "/api/v2/blog/random/8"
+        url: this.apiDomain + "/api/news"
       };
 
       this.axios(config)
         .then(response => {
-          let { blogs } = response.data;
-          this.blogs = blogs;
+          let { data } = response.data;
+          this.beritas = data;
+
+          console.log(this.beritas);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    goo() {
+      const config = {
+        method: "get",
+        url: this.apiDomain + "/api/announcement"
+      };
+
+      this.axios(config)
+        .then(response => {
+          let { data } = response.data;
+          this.pengumumans = data;
+
+          console.log(this.pengumumans);
         })
         .catch(error => {
           console.log(error);
@@ -110,6 +128,7 @@ export default {
     console.log(this.$store.state.count);
 
     this.go();
+    this.goo();
   }
 };
 </script>

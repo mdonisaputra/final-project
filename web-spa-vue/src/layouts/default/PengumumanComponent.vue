@@ -1,16 +1,18 @@
 <template>
   <v-flex xs6>
-    <v-card :to="'/pengumuman/' + blog.id">
+    <v-card :to="'/pengumuman/' + pengumuman.id">
       <v-img
         :src="
-          blog.photo ? apiDomain + blog.photo : 'https://picsum.photos/200/300'
+          pengumuman.file
+            ? apiDomain + pengumuman.file
+            : 'https://picsum.photos/200/300'
         "
         class="white--text"
         height="200px"
       >
         <v-card-title
           class="fill-height align-end text-h3 font-weight-bold"
-          v-text="blog.title"
+          v-text="pengumuman.judul"
         >
         </v-card-title>
       </v-img>
@@ -20,7 +22,7 @@
       </v-card-actions>
 
       <v-card-actions>
-        <span>{{ blog.description.substring(0, 15) }}...</span>
+        <span>{{ pengumuman.deskripsi.substring(0, 15) }}...</span>
       </v-card-actions>
     </v-card>
   </v-flex>
@@ -29,8 +31,8 @@
 <script>
 export default {
   data: () => ({
-    apiDomain: "http://demo-api-vue.sanbercloud.com"
+    apiDomain: "http://project-webservice.herokuapp.com/api/announcement"
   }),
-  props: ["blog"]
+  props: ["pengumuman"]
 };
 </script>
