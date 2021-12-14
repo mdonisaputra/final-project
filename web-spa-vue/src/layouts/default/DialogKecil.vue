@@ -11,7 +11,8 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
-    Comment: () => import("./Comment.vue")
+    Comment: () => import("./Comment.vue"),
+    OtpVerif: () => import("./OtpVerif.vue")
   },
 
   computed: {

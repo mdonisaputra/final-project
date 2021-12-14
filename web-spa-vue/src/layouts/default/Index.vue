@@ -146,7 +146,7 @@ export default {
   },
 
   data: () => ({
-    guest: true,
+    // guest: true,
     // menus: [
     //   { title: "Home", icon: "mdi-home", route: "/" },
     //   { title: "Berita", icon: "mdi-note", route: "/berita" },
@@ -198,13 +198,15 @@ export default {
 
     register() {
       this.setDialogComponent({ component: "register" });
+      // this.otp();
     },
+
     ...mapActions({
       setAlert: "alert/set",
       setDialogComponent: "dialog/setComponent",
       setToken: "auth/setToken",
-      setUser: "auth/setUser",
-      checkToken: "auth/checkToken"
+      setUser: "auth/setUser"
+      // checkToken: "auth/checkToken"
     })
   },
 

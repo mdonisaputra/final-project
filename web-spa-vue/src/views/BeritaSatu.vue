@@ -38,7 +38,6 @@
             <v-icon>mdi-account-edit</v-icon> Komentar
           </v-btn>
         </div>
-        <comment />
       </v-card-text>
     </v-card>
 

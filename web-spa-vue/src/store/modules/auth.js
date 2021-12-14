@@ -19,28 +19,28 @@ export default{
             commit('setToken', payload)
             dispatch('checkToken', payload)
         },
-        checkToken: ({commit}, payload) => {
-            let config = {
-                method: "post",
-                url: "http://project-webservice.herokuapp.com/api/auth/login",
-                // url: 'http://project-webservice.herokuapp.com/api/v2/auth/me',
-                headers: {
-                    'Authorization': 'Bearer' + payload,
-                },
-            }
-        // setUser: ({commit}, payload) => {
-        //     commit('setUser', payload)
-        // },
+        // checkToken: ({commit}, payload) => {
+        //     let config = {
+        //         method: "post",
+        //         url: "http://project-webservice.herokuapp.com/api/auth/login",
+        //         // url: 'http://project-webservice.herokuapp.com/api/v2/auth/me',
+        //         headers: {
+        //             'Authorization': 'Bearer' + payload,
+        //         },
+        //     }
+        // // setUser: ({commit}, payload) => {
+        // //     commit('setUser', payload)
+        // // },
         
-        axios(config)
-            .then((response) => {
-                commit('setUser', response.data)
-            })
-            .catch(() => {
-                commit('setUser', {})
-                commit('setToken', '')
-            })
-        },
+        // axios(config)
+        //     .then((response) => {
+        //         commit('setUser', response.data)
+        //     })
+        //     // .catch(() => {
+        //     //     commit('setUser', {})
+        //     //     commit('setToken', '')
+        //     // })
+        // },
     },
     getters: {
         user: state => state.user,
