@@ -16,8 +16,9 @@ Website Pemerintah Sukamaju
 
 
 ## Link Demo
-- Link Deploy Web SPA Vue : https://pemdessukamaju.netlify.app/
+- Link Deploy Website : https://pemdessukamaju.netlify.app/ (Wajib menggunakan ekstensi Allow CORS di browser)
 - Link Dokumentasi Postman : https://documenter.getpostman.com/view/18391824/UVR7LUGi
+- Link Panduan Website : https://drive.google.com/file/d/1_93Ik9Ft1DF0UmxroG_rgaZs67vS6KzY/view?usp=sharing
 - Link Demo Video : 
 - Link Deploy : 
   1. News : https://project-webservice.herokuapp.com/api/news
