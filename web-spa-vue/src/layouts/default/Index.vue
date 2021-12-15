@@ -75,13 +75,18 @@
         <v-list>
           <v-list-item v-if="!guest" class="mb-0 justify-space-between pl-3">
             <v-list-item-avatar>
-              <v-img
+              <!-- <v-img
                 :src="
                   user.photo_profile
                     ? apiDomain + user.photo_profile
-                    : 'https://randomuser.me/api/portraits/men/77.jpg'
+                    : 'https://picsum.photos/200/300'
                 "
-              ></v-img>
+              ></v-img> -->
+              <v-avatar color="primary">
+                <span class="white--text text-h3 font-weight-bold">{{
+                  user.username.substring(0, 1).toUpperCase()
+                }}</span></v-avatar
+              >
             </v-list-item-avatar>
 
             <v-list-item-content class="pl-2">
@@ -146,7 +151,7 @@ export default {
   },
 
   data: () => ({
-    // guest: true,
+    tok: "",
     // menus: [
     //   { title: "Home", icon: "mdi-home", route: "/" },
     //   { title: "Berita", icon: "mdi-note", route: "/berita" },
@@ -164,17 +169,15 @@ export default {
   methods: {
     logout() {
       let config = {
-        method: "post",
-        url: this.apiDomain + "/api/auth/login",
+        method: "get",
+        url: this.apiDomain + "/api/news"
         // url: this.apiDomain + "logout",
-        headers: {
-          Authorization: "Bearer " + this.token
-        }
       };
       this.axios(config)
         .then(() => {
           this.setToken("");
           this.setUser({});
+          this.token("");
 
           this.setAlert({
             status: true,
@@ -185,8 +188,8 @@ export default {
         .catch(response => {
           this.setAlert({
             status: true,
-            color: "error",
-            text: response.data.error
+            color: "success",
+            text: "berhasil Logout"
           });
         });
     },

@@ -2,12 +2,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import pathify from '@/plugins/vuex-pathify'
-// import VuexPersist from 'vuex-persist'
+import VuexPersist from 'vuex-persist'
 
-// const vuexPersist = new VuexPersist({
-//   // key: '123456',
-//   // storage: localStorage
-// });
+const vuexPersist = new VuexPersist({
+  key: 'kel13',
+  storage: localStorage
+});
 
 // Modules
 import * as modules from './modules'
@@ -18,7 +18,7 @@ const store = new Vuex.Store({
   modules,
   plugins: [
     pathify.plugin,
-    // vuexPersist.plugin,
+    vuexPersist.plugin,
 
   ],
 })

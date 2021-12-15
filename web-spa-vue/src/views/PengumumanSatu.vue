@@ -112,10 +112,12 @@ export default {
         });
     },
     komen() {
+      let { id } = this.$route.params;
+
       const config = {
         method: "get",
         // url: this.apiDomain + "/api/v2/blog?page=" + this.page
-        url: this.apiDomain + "/api/announcecomment"
+        url: `${this.apiDomain}/api/announcecomment?announcement_id=${id}`
       };
 
       this.axios(config)
