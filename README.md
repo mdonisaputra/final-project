@@ -16,6 +16,7 @@ Website Pemerintah Sukamaju
 
 
 ## Link Demo
+- Link Deploy Web SPA Vue : https://pemdessukamaju.netlify.app/
 - Link Dokumentasi Postman : https://documenter.getpostman.com/view/18391824/UVR7LUGi
 - Link Demo Video : 
 - Link Deploy : 
