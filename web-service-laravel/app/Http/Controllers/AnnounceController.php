@@ -80,7 +80,7 @@ class AnnounceController extends Controller
             'judul'     => $request->judul,
             'user_id' =>$user->id,
             'deskripsi'   => $request->deskripsi,
-            'file' => $nullable
+            'file' => $request->file
         ]);
 
         //success save to database
@@ -142,7 +142,7 @@ class AnnounceController extends Controller
             $announcement->update([
                 'judul'     => $request->judul,
                 'deskripsi'   => $request->deskripsi,
-                'file' => $nullable
+                'file' => $request->file
             ]);
             
             return response()->json([

@@ -79,7 +79,7 @@ class NewsController extends Controller
             'judul'     => $request->judul,
             'user_id' =>$user->id,
             'deskripsi'   => $request->deskripsi,
-            'gambar' => $nullable
+            'gambar' => $request->gambar
         ]);
 
         //success save to database
@@ -141,7 +141,7 @@ class NewsController extends Controller
             $new->update([
                 'judul'     => $request->judul,
                 'deskripsi'   => $request->deskripsi,
-                'gambar' => $nullable
+                'gambar' => $request->gambar
             ]);
             
             return response()->json([
